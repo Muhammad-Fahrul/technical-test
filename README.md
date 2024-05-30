@@ -2,6 +2,16 @@
 
 ## Development server
 
+tambahkan file .env pada root direktori dengan values sebagai berikut:
+
+```
+NODE_ENV=production
+PORT=5000
+WHITELIST_ORIGIN=http://localhost:4200
+ACCESS_TOKEN_SECRET=yoursecretaccesstoken
+REFRESH_TOKEN_SECRET=yoursecretrefrestoken
+```
+
 Run `npm install` di direktori root untuk menginstall packages aplikasi backend
 
 Run `npm install` di direktori frontend untuk menginstall packages aplikasi frontend
