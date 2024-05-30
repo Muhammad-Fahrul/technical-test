@@ -1,0 +1,28 @@
+<div class="container">
+  <form (submit)="login($event)" class="login-page" [formGroup]="form">
+    <h1>Login</h1>
+    <div class="inputs">
+      <label for="username">Username</label>
+      <input
+        formControlName="username"
+        type="text"
+        class="username"
+        autocomplete="username"
+        placeholder="Username"
+      />
+      <label for="password">password</label>
+      <input
+        formControlName="password"
+        type="password"
+        class="password"
+        name="password"
+        autocomplete="current-password"
+        placeholder="Password"
+      />
+    </div>
+
+    <button [class.inactive]="!form.valid" type="submit" class="enter">
+      Login
+    </button>
+  </form>
+</div>

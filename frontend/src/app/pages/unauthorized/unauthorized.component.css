@@ -1,0 +1,9 @@
+.unauthorized {
+  display: flex;
+  align-items: center;
+  padding-block: 1em;
+}
+
+.unauthorized p {
+  color: rgb(214, 42, 42);
+}

@@ -1,0 +1,48 @@
+.note {
+  margin: 1em;
+}
+
+.note .form-add-note {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #323232;
+  color: #fff;
+  padding: 1em;
+  transition: all 0.3s;
+}
+
+.note .form-add-note .inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.note .form-add-note .inputs input,
+.note .form-add-note .inputs button {
+  width: 100%;
+  border-radius: 5px;
+  padding: 0.3em;
+  border: none;
+}
+
+.note .form-add-note .inputs .btns {
+  margin-top: 0.5em;
+  display: flex;
+  gap: 0.5em;
+}
+
+.note .form-add-note .inputs button {
+  color: #fff;
+  background-color: #645bff;
+}
+
+.note .form-add-note .btns button:last-child {
+  background-color: rgb(235, 72, 72);
+}
+
+.note .detail {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+}

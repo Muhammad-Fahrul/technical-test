@@ -1,0 +1,29 @@
+.note {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid black;
+  padding: 0.5em 1em;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 0.5em;
+}
+
+.title {
+  flex: 2;
+  font-size: 16px;
+  font-weight: 600;
+  width: max-content;
+  padding-bottom: 2px;
+  text-transform: capitalize;
+}
+
+.note .detail {
+  font-size: 12px;
+  display: flex;
+  gap: 0.3em;
+  align-items: center;
+}
+
+.note .detail i {
+  font-size: 10px;
+}
