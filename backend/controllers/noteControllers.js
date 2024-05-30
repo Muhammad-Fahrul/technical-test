@@ -7,6 +7,7 @@ const notesDB = {
 };
 
 import NoteValidator from '../validator/note/index.js';
+import QueryValidator from '../validator/query/index.js';
 
 const addNote = (req, res) => {
   const { title, desc } = req.body;
@@ -44,6 +45,8 @@ const getNotes = (req, res) => {
   const title = req.query.title || '';
   const page = parseInt(req.query.page) || 1; // Default page to 1 if not provided
   const limit = 5; // Limit to 5 notes per page
+
+  QueryValidator.validateQuerySchema({ title, page });
 
   const notes = notesDB.notes;
 

@@ -41,6 +41,8 @@ Response Body Success :
 
 ### Add Note API
 
+Setiap Data akan selalu memiliki id unique
+
 Endpoint : POST /api/notes
 
 Request Body :
