@@ -4,7 +4,7 @@ import { NoteService } from '../../../services/note.service';
 import { Observable, EMPTY, of, catchError, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NoteComponent } from '../note/note.component';
+import { NoteComponent } from './note/note.component';
 
 @Component({
   selector: 'app-notes',
