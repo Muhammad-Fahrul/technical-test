@@ -1,0 +1,23 @@
+<div *ngIf="notes$ | async as notes; else loading">
+  <div *ngIf="notes.length > 0; else noNotes">
+    <div *ngFor="let note of notes">
+      <app-note [note]="note"></app-note>
+    </div>
+  </div>
+  <ng-template #noNotes>
+    <p>No notes available.</p>
+  </ng-template>
+  <div *ngIf="errorMessage && !notes.length" class="error-message">
+    {{ errorMessage }}
+  </div>
+</div>
+<ng-template #loading>Loading...</ng-template>
+
+<div class="page-control-btns">
+  <button (click)="loadLess()" [disabled]="currentPage === 1">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <button (click)="loadMore()" [disabled]="currentPage >= totalPages">
+    <i class="fa-solid fa-arrow-right"></i>
+  </button>
+</div>

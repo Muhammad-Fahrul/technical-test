@@ -1,0 +1,69 @@
+.form-add-note {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #323232;
+  color: #fff;
+  width: 100%;
+  padding: 1em;
+  transform: translateY(-300px);
+  transition: all 0.3s;
+  text-transform: capitalize;
+}
+
+.form-add-note.onscreen {
+  transform: translateY(0);
+}
+
+.form-add-note .inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.form-add-note .inputs input,
+.form-add-note .inputs button {
+  width: 100%;
+  border-radius: 5px;
+  padding: 0.3em;
+  border: none;
+}
+
+.form-add-note .inputs button {
+  color: #fff;
+  margin-top: 0.5em;
+  background-color: #645bff;
+}
+
+.button-icon-position-fixed {
+  position: fixed;
+  right: 1.2em;
+  bottom: 1.5em;
+  display: flex;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  background-color: #645bff;
+  color: #ffff;
+  z-index: 99;
+}
+
+.button-icon-position-fixed .icon {
+  width: 100%;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
+.button-icon-position-fixed:hover .icon {
+  transform: rotate(180deg);
+}

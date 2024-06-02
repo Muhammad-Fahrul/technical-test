@@ -1,0 +1,23 @@
+<form
+  [formGroup]="noteForm"
+  class="form-add-note"
+  [class.onscreen]="display"
+  (submit)="addNote()"
+>
+  <h1>New Note</h1>
+  <div class="inputs">
+    <label for="title">title</label>
+    <input
+      name="title"
+      type="text"
+      required="required"
+      formControlName="title"
+    />
+    <label for="desc">desc</label>
+    <input name="desc" type="text" required="required" formControlName="desc" />
+    <button type="submit" class="enter">Add</button>
+  </div>
+</form>
+<button class="button-icon-position-fixed" (click)="toggleDisplay()">
+  <div class="icon"><i class="fa-solid fa-plus"></i></div>
+</button>

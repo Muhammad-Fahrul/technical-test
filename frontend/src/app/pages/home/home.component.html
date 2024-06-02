@@ -1,64 +1,7 @@
 <section class="home">
-  <form class="form-search" [formGroup]="searchForm">
-    <span>
-      <i class="fa-solid fa-magnifying-glass"></i>
-    </span>
-    <input
-      type="search"
-      formControlName="title"
-      placeholder="Search note by title"
-    />
-  </form>
+  <app-note-search></app-note-search>
 
-  <div *ngIf="notes$ | async as notes; else loading">
-    <div *ngIf="notes.length > 0; else noNotes">
-      <div *ngFor="let note of notes">
-        <app-note [note]="note"></app-note>
-      </div>
-    </div>
-    <ng-template #noNotes>
-      <p>No notes available.</p>
-    </ng-template>
-    <div *ngIf="errorMessage && !notes.length" class="error-message">
-      {{ errorMessage }}
-    </div>
-  </div>
-  <ng-template #loading>Loading...</ng-template>
+  <app-notes></app-notes>
 
-  <div class="page-control-btns">
-    <button (click)="loadLess()" [disabled]="currentPage === 1">
-      <i class="fa-solid fa-arrow-left"></i>
-    </button>
-    <button (click)="loadMore()" [disabled]="currentPage >= totalPages">
-      <i class="fa-solid fa-arrow-right"></i>
-    </button>
-  </div>
-  <form
-    [formGroup]="noteForm"
-    class="form-add-note"
-    [class.onscreen]="display"
-    (submit)="addNote($event)"
-  >
-    <h1>New Note</h1>
-    <div class="inputs">
-      <label for="title">title</label>
-      <input
-        name="title"
-        type="text"
-        required="required"
-        formControlName="title"
-      />
-      <label for="desc">desc</label>
-      <input
-        name="desc"
-        type="text"
-        required="required"
-        formControlName="desc"
-      />
-      <button type="submit" class="enter">Add</button>
-    </div>
-  </form>
-  <button class="button-icon-position-fixed" (click)="toggleDisplay()">
-    <div class="icon"><i class="fa-solid fa-plus"></i></div>
-  </button>
+  <app-note-add (noteAdded)="onNoteAdded()"></app-note-add>
 </section>
