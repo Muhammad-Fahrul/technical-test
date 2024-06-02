@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Note } from '../../../models/note.model';
 import { NoteService } from '../../../services/note.service';
 import { Observable, EMPTY, of, catchError, switchMap } from 'rxjs';
@@ -13,7 +13,7 @@ import { NoteComponent } from '../note/note.component';
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.css'],
 })
-export class NotesComponent implements OnInit {
+export class NotesComponent {
   notes$!: Observable<Note[]>;
   errorMessage: string = '';
   currentPage: number = 1;
