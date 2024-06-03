@@ -1,7 +1,10 @@
 <section class="home">
-  <app-note-search></app-note-search>
+  <app-note-search
+    [(title)]="title"
+    (titleChange)="onSearchNotes()"
+  ></app-note-search>
 
-  <app-notes></app-notes>
+  <app-notes [title]="title"></app-notes>
 
   <app-note-add (noteAdded)="onNoteAdded()"></app-note-add>
 </section>

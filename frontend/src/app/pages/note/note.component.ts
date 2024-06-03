@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-note',
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
-  template: ` <ng-container *ngIf="note$ | async as note">
+  template: `
     <div class="note">
       <form [formGroup]="noteForm" class="form-add-note">
         <h1>Detail Note</h1>
@@ -41,13 +41,13 @@ import { HttpErrorResponse } from '@angular/common/http';
         <i class="fa-solid fa-angles-right"></i>
       </a>
     </div>
-  </ng-container>`,
+  `,
   styleUrl: './note.component.css',
 })
 export class NoteComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   noteId = 0;
-  note$!: Observable<Note>;
+  note!: Note;
   success: string = '';
 
   constructor(
@@ -64,16 +64,11 @@ export class NoteComponent {
   });
 
   ngOnInit() {
-    this.note$ = this.noteService.getNoteById(this.noteId).pipe(
-      catchError((err) => {
-        this.router.navigate(['/notfound']);
-        return EMPTY;
-      })
-    );
-    this.note$.subscribe((note) => {
+    this.noteService.getNoteById(this.noteId).subscribe((note) => {
+      this.note = note;
       this.noteForm.patchValue({
-        title: note.title,
-        desc: note.desc,
+        title: this.note.title,
+        desc: this.note.desc,
       });
     });
   }

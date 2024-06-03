@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Note } from '../../../models/note.model';
+import { Component, Input, Output } from '@angular/core';
+import { Note, ResponseNote } from '../../../models/note.model';
 import { NoteService } from '../../../services/note.service';
-import { Observable, EMPTY, of, catchError, switchMap } from 'rxjs';
+import { EMPTY, catchError, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NoteComponent } from './note/note.component';
@@ -14,10 +14,11 @@ import { NoteComponent } from './note/note.component';
   styleUrls: ['./notes.component.css'],
 })
 export class NotesComponent {
-  notes$!: Observable<Note[]>;
-  errorMessage: string = '';
+  @Input() title!: string;
+  notes: Note[] = [];
   currentPage: number = 1;
   totalPages: number = 1;
+  errorMessage: string = '';
 
   constructor(
     private noteService: NoteService,
@@ -26,52 +27,47 @@ export class NotesComponent {
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      this.currentPage = params['page'] || 1;
-      this.fetchNotes();
-    });
+    this.fetchNotes(this.title, 1);
   }
 
-  fetchNotes() {
-    this.route.queryParams
+  fetchNotes(title: string = '', page: number) {
+    const queryParams = { title, page }; // Misalnya kita menetapkan page ke 1
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge', // Menggabungkan query parameters dengan yang sudah ada
+    });
+    this.noteService
+      .getNotes(title, page)
       .pipe(
-        switchMap((params) => {
-          const query = params['title'] || '';
-          const page = params['page'] || this.currentPage || 1;
-          return this.noteService.getNotes(query, page).pipe(
-            catchError((error) => {
-              console.error(error);
-              this.errorMessage = 'Error fetching notes';
-              return EMPTY;
-            })
-          );
+        catchError((error) => {
+          console.error(error);
+          this.errorMessage = 'Error fetching notes';
+          return EMPTY;
         })
       )
       .subscribe((response) => {
-        this.notes$ = of(response.notes);
-        this.currentPage = response.currentPage;
-        this.totalPages = response.totalPages;
+        this.setResponse(response);
       });
   }
 
   loadMore() {
-    this.currentPage++;
-    this.updateQueryParam();
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.fetchNotes(this.title, this.currentPage);
+    }
   }
 
   loadLess() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.updateQueryParam();
+      this.fetchNotes(this.title, this.currentPage);
     }
   }
 
-  updateQueryParam() {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { page: this.currentPage },
-      queryParamsHandling: 'merge',
-    });
-    this.fetchNotes();
+  private setResponse(response: ResponseNote) {
+    this.notes = response.notes;
+    this.currentPage = response.currentPage;
+    this.totalPages = response.totalPages;
   }
 }

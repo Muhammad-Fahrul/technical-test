@@ -1,10 +1,12 @@
-<form class="form-search" [formGroup]="searchForm">
+<form class="form-search">
   <span>
     <i class="fa-solid fa-magnifying-glass"></i>
   </span>
   <input
     type="search"
-    formControlName="title"
+    name="search"
     placeholder="Search note by title"
+    #searchInput
+    [(ngModel)]="searchTitle"
   />
 </form>

@@ -21,15 +21,15 @@ export class NoteAddComponent {
 
   display: boolean = false;
 
-  noteForm: FormGroup = this.formBuilder.group({
-    title: ['', Validators.required],
-    desc: ['', Validators.required],
-  });
-
   constructor(
     private formBuilder: FormBuilder,
     private noteService: NoteService
   ) {}
+
+  noteForm: FormGroup = this.formBuilder.group({
+    title: ['', Validators.required],
+    desc: ['', Validators.required],
+  });
 
   toggleDisplay() {
     this.display = !this.display;

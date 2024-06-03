@@ -23,7 +23,13 @@ export class HomeComponent {
 
   constructor() {}
 
+  title: any;
+
   onNoteAdded() {
-    this.notesComponent.fetchNotes();
+    this.notesComponent.fetchNotes('', this.notesComponent.currentPage);
+  }
+
+  onSearchNotes() {
+    this.notesComponent.fetchNotes(this.title, this.notesComponent.currentPage);
   }
 }

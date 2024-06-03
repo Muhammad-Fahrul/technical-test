@@ -1,43 +1,56 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { fromEvent } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-note-search',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './note-search.component.html',
   styleUrls: ['./note-search.component.css'],
 })
 export class NoteSearchComponent {
-  searchForm: FormGroup;
+  @Input() title!: string;
+  @Output() titleChange = new EventEmitter<string>();
+  @ViewChild('searchInput') searchInput!: ElementRef;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    this.searchForm = this.formBuilder.group({
-      title: [''],
+  searchTitle: string = '';
+
+  constructor() {}
+
+  // Fungsi debounce diimplementasikan dalam komponen
+  debounce(callback: (...args: any[]) => void, delay: number) {
+    let timeoutId: any;
+    return (...args: any[]) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    };
+  }
+
+  ngAfterViewInit() {
+    const debouncedUpdateSearch = this.debounce(
+      this.updateSearch.bind(this),
+      300
+    );
+    fromEvent(this.searchInput.nativeElement, 'input').subscribe(() => {
+      this.searchTitle = this.searchInput.nativeElement.value;
+      debouncedUpdateSearch(this.searchTitle);
     });
   }
 
-  ngOnInit() {
-    this.searchForm
-      .get('title')!
-      .valueChanges.pipe(
-        startWith(''),
-        debounceTime(300),
-        distinctUntilChanged()
-      )
-      .subscribe((query) => {
-        this.router.navigate([], {
-          relativeTo: this.route,
-          queryParams: { title: query, page: 1 },
-          queryParamsHandling: 'merge',
-        });
-      });
+  updateSearch(title: string) {
+    this.titleChange.emit(title);
   }
 }
