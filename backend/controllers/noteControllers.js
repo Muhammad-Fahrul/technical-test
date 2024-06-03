@@ -22,13 +22,7 @@ const addNote = (req, res) => {
 
   const length = Number(notes.length);
 
-  let noteId = length === 0 ? 1 : length + 1;
-
-  const existNote = notes.filter((n) => n.id === noteId)[0];
-
-  if (existNote) {
-    noteId = length + 2;
-  }
+  let noteId = length === 0 ? 1 : notes[length].id + 1;
 
   const newNote = { id: noteId, title: title.toLocaleLowerCase(), desc };
 
