@@ -12,17 +12,13 @@ import QueryValidator from '../validator/query/index.js';
 const addNote = (req, res) => {
   const { title, desc } = req.body;
 
-  if (!title || !desc) {
-    return res.status(400).send('title and desc tidak boleh kosong');
-  }
-
   NoteValidator.validateNoteSchema({ title, desc });
 
   const notes = notesDB.notes;
 
   const length = Number(notes.length);
 
-  let noteId = length === 0 ? 1 : notes[length].id + 1;
+  let noteId = length === 0 ? 1 : Number(notes[length - 1].id) + 1;
 
   const newNote = { id: noteId, title: title.toLocaleLowerCase(), desc };
 
