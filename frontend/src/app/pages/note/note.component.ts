@@ -1,9 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Note } from '../../models/note.model';
 import { CommonModule } from '@angular/common';
 import { NoteService } from '../../services/note.service';
-import { EMPTY, Observable, catchError, switchMap } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
