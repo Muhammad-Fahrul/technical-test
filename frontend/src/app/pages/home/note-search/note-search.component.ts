@@ -1,13 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { fromEvent } from 'rxjs';
+import { Subject, debounceTime } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -20,37 +13,24 @@ import { CommonModule } from '@angular/common';
 export class NoteSearchComponent {
   @Input() title!: string;
   @Output() titleChange = new EventEmitter<string>();
-  @ViewChild('searchInput') searchInput!: ElementRef;
-
-  searchTitle: string = '';
+  private titleSubject: Subject<string> = new Subject<string>();
+  private subscription: any;
 
   constructor() {}
 
-  // Fungsi debounce diimplementasikan dalam komponen
-  debounce(callback: (...args: any[]) => void, delay: number) {
-    let timeoutId: any;
-    return (...args: any[]) => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      timeoutId = setTimeout(() => {
-        callback(...args);
-      }, delay);
-    };
+  ngOnInit() {
+    this.subscription = this.titleSubject
+      .pipe(debounceTime(300)) // Menunggu selama 300ms
+      .subscribe((newTitle: string) => {
+        this.titleChange.emit(newTitle);
+      });
   }
 
-  ngAfterViewInit() {
-    const debouncedUpdateSearch = this.debounce(
-      this.updateSearch.bind(this),
-      300
-    );
-    fromEvent(this.searchInput.nativeElement, 'input').subscribe(() => {
-      this.searchTitle = this.searchInput.nativeElement.value;
-      debouncedUpdateSearch(this.searchTitle);
-    });
+  ngOnDestroy() {
+    this.subscription.unsubscribe(); // Membersihkan subscription saat komponen dihancurkan
   }
 
-  updateSearch(title: string) {
-    this.titleChange.emit(title);
+  onTitleChange(newTitle: string) {
+    this.titleSubject.next(newTitle); // Memancarkan nilai baru ke Subject
   }
 }

@@ -45,7 +45,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './note.component.css',
 })
 export class NoteComponent {
-  route: ActivatedRoute = inject(ActivatedRoute);
   noteId = 0;
   note!: Note;
   success: string = '';
@@ -53,7 +52,8 @@ export class NoteComponent {
   constructor(
     private noteService: NoteService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.noteId = Number(this.route.snapshot.params['id']);
   }

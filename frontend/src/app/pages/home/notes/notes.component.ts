@@ -1,7 +1,7 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Note, ResponseNote } from '../../../models/note.model';
 import { NoteService } from '../../../services/note.service';
-import { EMPTY, catchError, switchMap } from 'rxjs';
+import { EMPTY, catchError } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NoteComponent } from './note/note.component';
@@ -25,10 +25,6 @@ export class NotesComponent {
     private route: ActivatedRoute,
     private router: Router
   ) {}
-
-  ngOnInit() {
-    this.fetchNotes(this.title, 1);
-  }
 
   fetchNotes(title: string = '', page: number) {
     const queryParams = { title, page }; // Misalnya kita menetapkan page ke 1
@@ -62,6 +58,16 @@ export class NotesComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.fetchNotes(this.title, this.currentPage);
+    }
+  }
+
+  ngOnInit() {
+    this.fetchNotes(this.title, this.currentPage);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['title']) {
+      this.fetchNotes(this.title, 1);
     }
   }
 

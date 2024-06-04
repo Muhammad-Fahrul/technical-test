@@ -28,8 +28,4 @@ export class HomeComponent {
   onNoteAdded() {
     this.notesComponent.fetchNotes('', this.notesComponent.currentPage);
   }
-
-  onSearchNotes() {
-    this.notesComponent.fetchNotes(this.title, this.notesComponent.currentPage);
-  }
 }

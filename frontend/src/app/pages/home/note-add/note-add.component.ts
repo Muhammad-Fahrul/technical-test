@@ -8,6 +8,7 @@ import {
 import { NoteService } from '../../../services/note.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-note-add',
@@ -23,7 +24,8 @@ export class NoteAddComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private noteService: NoteService
+    private noteService: NoteService,
+    private router: Router
   ) {}
 
   noteForm: FormGroup = this.formBuilder.group({
