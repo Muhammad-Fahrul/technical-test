@@ -8,12 +8,12 @@ import {
 import { NoteService } from '../../../services/note.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ClickoutsiteDirective } from '../../../directives/clickoutsite.directive';
 
 @Component({
   selector: 'app-note-add',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ClickoutsiteDirective],
   templateUrl: './note-add.component.html',
   styleUrls: ['./note-add.component.css'],
 })
@@ -24,8 +24,7 @@ export class NoteAddComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private noteService: NoteService,
-    private router: Router
+    private noteService: NoteService
   ) {}
 
   noteForm: FormGroup = this.formBuilder.group({
@@ -34,7 +33,8 @@ export class NoteAddComponent {
   });
 
   toggleDisplay() {
-    this.display = !this.display;
+    console.log(this.display);
+    this.display = true;
   }
 
   addNote() {
