@@ -12,15 +12,27 @@ ACCESS_TOKEN_SECRET=yoursecretaccesstoken
 REFRESH_TOKEN_SECRET=yoursecretrefrestoken
 ```
 
+# Initiate this app
+
 Run `npm install` di direktori root untuk menginstall packages aplikasi backend
 
 Run `npm install` di direktori frontend untuk menginstall packages aplikasi frontend
 
-lalu jalankan kedua aplikasi dengan perintah `npm run dev`
+# How to run this app
+
+### 1. First
+
+jalankan kedua aplikasi dengan perintah `npm run dev`
 
 pastikan aplilkasi frontend berjalan di `localhost:4200`
 
 dan aplikasi backend di `localhost:5000`
+
+### 2. Second
+
+build kode frontend (angular) dengan menjalankan `npm run build` pada direktori /frontend,
+
+jalankan kode backend pada direkotri root dengan perintah `npm run dev`
 
 # User API Spec
 
@@ -75,4 +87,4 @@ Response Body Success :
 }
 ```
 
-Untuk Request lainnya bisa dilihat pada folder postman test
+#### Untuk Request lainnya bisa dilihat pada folder postman test
